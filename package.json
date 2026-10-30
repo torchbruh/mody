@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/restore-images.mjs && astro build",
+    "pack-images": "node scripts/pack-images.mjs",
     "preview": "astro preview"
   },
   "dependencies": {
