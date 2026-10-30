@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Signup from '../components/Signup.astro';
+import { getCollection } from 'astro:content';
+const listings = await getCollection('listings');
+const categories = [...new Set(listings.map((l) => l.data.category))];
+const featured = listings.slice(0, 3);
+---
+<Base>
+  <section class="hero">
+    <span class="chip">Starting with Model Y</span>
+    <h1>The useful Model Y accessories, without the noise.</h1>
+    <p class="lede">ModY is a hand-picked directory of Tesla Model Y accessories and mods, including floor liners, console trays, sunshades, mud flaps, and more. Each listing says who it's for, which model years it fits, and links straight to the maker or a major retailer. There are no fake reviews and no made-up prices.</p>
+    <div class="btns">
+      <a class="btn" href="/directory">Browse {listings.length} listings</a>
+      <a class="btn ghost" href="#newsletter">Get deal alerts</a>
+    </div>
+  </section>
+
+  <div class="features">
+    <div class="card"><h3>Who it's for</h3><p>New Model Y owners kitting out their car, and long-time owners looking for the one upgrade that's actually worth it.</p></div>
+    <div class="card"><h3>Honest notes</h3><p>Short, plain-English notes, including the trade-offs. We list fitment by generation (2020–2024 vs. 2025+ refresh) because it matters.</p></div>
+    <div class="card"><h3>Deal tracker (soon)</h3><p>We'll track real price drops from retailer pages. Until then, we never guess a price. Check the retailer for current pricing.</p></div>
+  </div>
+
+  <h2>Browse by category</h2>
+  <div class="filters">
+    {categories.map((c) => <a class="chip" style="text-decoration:none;padding:6px 14px" href={`/directory#${encodeURIComponent(c)}`}>{c}</a>)}
+  </div>
+
+  <h2>A few to start with</h2>
+  <div class="grid">
+    {featured.map(({ data }) => (
+      <article class="card">
+        <span class="chip">{data.category}</span>
+        <h3>{data.name}</h3>
+        <p>{data.note}</p>
+        <a class="go" href={data.url} rel="noopener nofollow" target="_blank">View at {data.source} →</a>
+      </article>
+    ))}
+  </div>
+
+  <Signup />
+</Base>

@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const listings = (await getCollection('listings')).sort((a, b) => a.data.category.localeCompare(b.data.category) || a.data.name.localeCompare(b.data.name));
+const categories = [...new Set(listings.map((l) => l.data.category))];
+---
+<Base title="Model Y accessory directory" description="An honest, curated directory of Tesla Model Y accessories: fitment, who each one is for, and links to the maker or retailer.">
+  <h1>Model Y accessory directory</h1>
+  <p class="lede">{listings.length} hand-picked listings. Prices change often, so we don't show them. Check the retailer for the current price.</p>
+  <p class="note">Fitment matters: the 2025+ refreshed Model Y ("Juniper") uses different interior parts from the 2020–2024 car. Always confirm your model year, seat count, and drivetrain on the retailer's page before you buy.</p>
+
+  <div class="filters" role="group" aria-label="Filter by category">
+    <button type="button" data-cat="all" aria-pressed="true">All</button>
+    {categories.map((c) => <button type="button" data-cat={c} aria-pressed="false">{c}</button>)}
+  </div>
+
+  <div class="grid" id="list">
+    {listings.map(({ data, id }) => (
+      <article class="card" data-cat={data.category} id={id}>
+        <span class="chip">{data.category}</span>
+        <h3>{data.name}</h3>
+        <div class="meta"><b>Fits:</b> {data.fit}</div>
+        <div class="meta"><b>For:</b> {data.forWho}</div>
+        <p>{data.note}</p>
+        <div class="meta"><b>Price:</b> check retailer</div>
+        <a class="go" href={data.url} rel="noopener nofollow" target="_blank">View at {data.source} →</a>
+      </article>
+    ))}
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:24px">Links go to manufacturer sites or major retailers. None of them are affiliate links right now. If that changes, we'll label them.</p>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
+    const cards = document.querySelectorAll<HTMLElement>('#list .card');
+    function apply(cat: string) {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cat === cat)));
+      cards.forEach((c) => { c.style.display = cat === 'all' || c.dataset.cat === cat ? '' : 'none'; });
+    }
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      const cat = b.dataset.cat || 'all';
+      apply(cat);
+      history.replaceState(null, '', cat === 'all' ? location.pathname : `#${encodeURIComponent(cat)}`);
+    }));
+    const initial = decodeURIComponent(location.hash.slice(1));
+    if (initial && [...buttons].some((b) => b.dataset.cat === initial)) apply(initial);
+  </script>
+</Base>

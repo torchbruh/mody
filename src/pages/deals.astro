@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Signup from '../components/Signup.astro';
+---
+<Base title="Deal tracker" description="ModY deal tracker for Model Y accessories, coming soon.">
+  <h1>Deal tracker</h1>
+  <p class="lede">Coming soon. We'll only post a deal after checking it on the retailer's own page, with the date we checked it.</p>
+  <div class="prose">
+    <h2>How it will work</h2>
+    <ul>
+      <li>We watch prices on the products in the <a href="/directory">directory</a>.</li>
+      <li>A deal is posted only when the retailer's page shows a real drop, and the post includes the source link and the date checked.</li>
+      <li>Expired deals are marked as expired, not quietly left up.</li>
+    </ul>
+    <p>No deals are listed yet, because we'd rather show nothing than show a price we haven't checked.</p>
+  </div>
+  <Signup />
+</Base>
