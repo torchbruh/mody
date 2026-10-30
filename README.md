@@ -7,7 +7,7 @@ An honest, no-fluff directory of Tesla Model Y accessories and mods: floor mats 
 | Page | URL |
 |---|---|
 | Home | https://mody-one.vercel.app/ |
-| Accessory directory (22 picks, 10 categories) | https://mody-one.vercel.app/directory |
+| Accessory directory (21 picks, 10 categories) | https://mody-one.vercel.app/directory |
 | Deals (coming soon) | https://mody-one.vercel.app/deals |
 | About | https://mody-one.vercel.app/about |
 
