@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Signup from '../components/Signup.astro';
 import { getCollection } from 'astro:content';
+import { affiliateLink, outboundRel } from '../lib/affiliate';
 const listings = await getCollection('listings');
 const categories = [...new Set(listings.map((l) => l.data.category))];
 const featured = listings.slice(0, 3);
@@ -35,7 +36,9 @@ const featured = listings.slice(0, 3);
         <span class="chip">{data.category}</span>
         <h3>{data.name}</h3>
         <p>{data.note}</p>
-        <a class="go" href={data.url} rel="noopener nofollow" target="_blank">View at {data.source} →</a>
+        {(() => { const link = affiliateLink(data.url); return (
+          <a class="go" href={link.href} rel={outboundRel(link.tagged)} target="_blank">View at {data.source} →{link.tagged && <span class="aff">Affiliate</span>}</a>
+        ); })()}
       </article>
     ))}
   </div>

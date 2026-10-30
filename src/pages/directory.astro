@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { affiliateLink, outboundRel, hasAmazonTag } from '../lib/affiliate';
 const listings = (await getCollection('listings')).sort((a, b) => a.data.category.localeCompare(b.data.category) || a.data.name.localeCompare(b.data.name));
 const categories = [...new Set(listings.map((l) => l.data.category))];
 ---
@@ -23,11 +24,13 @@ const categories = [...new Set(listings.map((l) => l.data.category))];
         <div class="meta"><b>For:</b> {data.forWho}</div>
         <p>{data.note}</p>
         <div class="meta"><b>Price:</b> check retailer</div>
-        <a class="go" href={data.url} rel="noopener nofollow" target="_blank">View at {data.source} →</a>
+        {(() => { const link = affiliateLink(data.url); return (
+          <a class="go" href={link.href} rel={outboundRel(link.tagged)} target="_blank">View at {data.source} →{link.tagged && <span class="aff">Affiliate</span>}</a>
+        ); })()}
       </article>
     ))}
   </div>
-  <p style="color:var(--muted);font-size:.85rem;margin-top:24px">Links go to manufacturer sites or major retailers. None of them are affiliate links right now. If that changes, we'll label them.</p>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:24px">Links go to manufacturer sites or major retailers. {hasAmazonTag ? 'Some Amazon links are affiliate links and are marked “Affiliate”. As an Amazon Associate, ModY earns from qualifying purchases. It never changes which products we list or what we say about them.' : 'Any affiliate link is marked “Affiliate” when present. Unlabeled links are plain links.'}</p>
 
   <script>
     const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');

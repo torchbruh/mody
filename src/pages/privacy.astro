@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { hasAmazonTag } from '../lib/affiliate';
 ---
 <Base title="Privacy">
   <div class="prose">
@@ -9,8 +10,11 @@ import Base from '../layouts/Base.astro';
       <li><strong>Newsletter:</strong> not live yet. The signup button opens your own email app, and nothing is stored here.</li>
       <li><strong>Hosting:</strong> the site is hosted on Vercel, which may keep standard server logs (such as IP address and request time) for security and operations.</li>
       <li><strong>Outbound links:</strong> retailer and manufacturer sites have their own privacy policies.</li>
+      {hasAmazonTag
+        ? <li><strong>Affiliate links:</strong> some Amazon links carry our Amazon Associates tag and are labeled “Affiliate”. If you click one, Amazon may set its own cookies to credit the referral. ModY itself doesn't set any cookies. As an Amazon Associate, ModY earns from qualifying purchases.</li>
+        : <li><strong>Affiliate links:</strong> any affiliate link on the site is labeled “Affiliate”. If you click one, the retailer may set its own cookies to credit the referral. ModY itself doesn't set any cookies.</li>}
     </ul>
-    <p>If we add analytics, affiliate links, or a real newsletter provider, we'll update this page first.</p>
+    <p>If we add analytics or a real newsletter provider, we'll update this page first.</p>
     <p style="font-size:.85rem">Last updated: October 2026.</p>
   </div>
 </Base>

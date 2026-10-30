@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { hasAmazonTag } from '../lib/affiliate';
 interface Props { title?: string; description?: string; }
 const { title, description = 'ModY — an honest directory of Tesla Model Y accessories and mods, with a deal tracker on the way.' } = Astro.props;
 const fullTitle = title ? `${title} · ModY` : 'ModY — Model Y accessory & mod directory';
@@ -40,7 +41,7 @@ const links = [
           <a href="/about">About</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a><a href="/directory">Directory</a>
         </p>
         <p>ModY is an independent project and is not affiliated with, endorsed by, or sponsored by Tesla, Inc. "Tesla" and "Model Y" are trademarks of their respective owner, used here only to describe compatibility.</p>
-        <p><strong>Affiliate disclosure:</strong> Some links may become affiliate links in the future. If that happens, we will label them clearly, and it will never change which products we list or what we say about them.</p>
+        <p><strong>Affiliate disclosure:</strong> Affiliate links, when present, are labeled “Affiliate”. They never change which products we list or what we say about them.{hasAmazonTag && ' As an Amazon Associate, ModY earns from qualifying purchases.'}</p>
       </div>
     </footer>
   </body>
