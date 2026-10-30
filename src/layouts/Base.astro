@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+interface Props { title?: string; description?: string; }
+const { title, description = 'ModY — an honest directory of Tesla Model Y accessories and mods, with a deal tracker on the way.' } = Astro.props;
+const fullTitle = title ? `${title} · ModY` : 'ModY — Model Y accessory & mod directory';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/directory', label: 'Directory' },
+  { href: '/deals', label: 'Deals' },
+  { href: '/about', label: 'About' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a class="logo" href="/">MOD<span>Y</span></a>
+        <nav>
+          {links.map((l) => <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main><div class="wrap"><slot /></div></main>
+    <footer class="site">
+      <div class="wrap">
+        <p>
+          <a href="/about">About</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a><a href="/directory">Directory</a>
+        </p>
+        <p>ModY is an independent project and is not affiliated with, endorsed by, or sponsored by Tesla, Inc. "Tesla" and "Model Y" are trademarks of their respective owner, used here only to describe compatibility.</p>
+        <p><strong>Affiliate disclosure:</strong> Some links may become affiliate links in the future. If that happens, we will label them clearly, and it will never change which products we list or what we say about them.</p>
+      </div>
+    </footer>
+  </body>
+</html>
