@@ -17,7 +17,8 @@ const categories = [...new Set(listings.map((l) => l.data.category))];
 
   <div class="grid" id="list">
     {listings.map(({ data, id }) => (
-      <article class="card" data-cat={data.category} id={id}>
+      <article class="card has-thumb" data-cat={data.category} id={id}>
+        {data.image && <div class="thumb"><img src={data.image} alt={data.imageAlt ?? data.name} width="800" height="600" loading="lazy" decoding="async" /></div>}
         <span class="chip">{data.category}</span>
         <h3>{data.name}</h3>
         <div class="meta"><b>Fits:</b> {data.fit}</div>

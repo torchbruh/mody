@@ -12,6 +12,8 @@ const listings = defineCollection({
     note: z.string(),
     url: z.string().url(),
     source: z.string(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
   }),
 });
 

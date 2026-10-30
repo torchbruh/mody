@@ -6,15 +6,27 @@ import { affiliateLink, outboundRel } from '../lib/affiliate';
 const listings = await getCollection('listings');
 const categories = [...new Set(listings.map((l) => l.data.category))];
 const featured = listings.slice(0, 3);
+const heroIds = ['tesla-all-weather-interior-liners-2025', 'spigen-console-bottle-juniper', 'abstract-ocean-lights', 'basenor-juniper-roof-shade', 'hansshow-roof-rack', 'tesla-universal-wall-connector'];
+const heroTiles = heroIds.map((h) => listings.find((l) => l.id === h)).filter(Boolean);
 ---
 <Base>
-  <section class="hero">
+  <section class="hero hero-split">
+    <div class="hero-copy">
     <span class="chip">Starting with Model Y</span>
     <h1>The useful Model Y accessories, without the noise.</h1>
     <p class="lede">ModY is a hand-picked directory of Tesla Model Y accessories and mods, including floor liners, console trays, sunshades, mud flaps, and more. Each listing says who it's for, which model years it fits, and links straight to the maker or a major retailer. There are no fake reviews and no made-up prices.</p>
     <div class="btns">
       <a class="btn" href="/directory">Browse {listings.length} listings</a>
       <a class="btn ghost" href="#newsletter">Get deal alerts</a>
+    </div>
+    </div>
+    <div class="hero-mosaic" aria-label="A few of the accessories in the directory">
+      {heroTiles.map((t) => t && (
+        <a href={`/directory#${encodeURIComponent(t.data.category)}`} title={t.data.name}>
+          <img src={t.data.image} alt={t.data.imageAlt ?? t.data.name} width="800" height="600" decoding="async" />
+          <span>{t.data.category}</span>
+        </a>
+      ))}
     </div>
   </section>
 
@@ -32,7 +44,8 @@ const featured = listings.slice(0, 3);
   <h2>A few to start with</h2>
   <div class="grid">
     {featured.map(({ data }) => (
-      <article class="card">
+      <article class="card has-thumb">
+        {data.image && <div class="thumb"><img src={data.image} alt={data.imageAlt ?? data.name} width="800" height="600" loading="lazy" decoding="async" /></div>}
         <span class="chip">{data.category}</span>
         <h3>{data.name}</h3>
         <p>{data.note}</p>

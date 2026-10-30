@@ -52,3 +52,17 @@ footer.site { border-top: 1px solid var(--line); padding: 28px 0 40px; color: va
 footer.site a { margin-right: 14px; }
 
 .aff { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 999px; background: var(--chip); color: var(--muted); font-size: .7rem; font-weight: 600; letter-spacing: .03em; vertical-align: middle; }
+
+/* images */
+.card.has-thumb { padding-top: 0; overflow: hidden; }
+.card .thumb { margin: 0 -20px 6px; aspect-ratio: 4 / 3; background: #fff; overflow: hidden; border-bottom: 1px solid var(--line); }
+.card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.card:hover .thumb img { transform: scale(1.03); }
+.hero-split { display: grid; grid-template-columns: 1.05fr 1fr; gap: 36px; align-items: center; }
+.hero-split .lede { font-size: 1.05rem; }
+.hero-mosaic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.hero-mosaic a { position: relative; display: block; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--line); aspect-ratio: 4 / 3; box-shadow: 0 10px 30px -18px rgba(0,0,0,.45); }
+.hero-mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.hero-mosaic a:hover img { transform: scale(1.04); }
+.hero-mosaic span { position: absolute; left: 8px; bottom: 8px; background: rgba(20,20,20,.72); color: #fff; font-size: .68rem; padding: 2px 8px; border-radius: 999px; }
+@media (max-width: 860px) { .hero-split { grid-template-columns: 1fr; gap: 24px; } }
