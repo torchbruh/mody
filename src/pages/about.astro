@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { hasAmazonTag } from '../lib/affiliate';
 ---
 <Base title="About">
   <div class="prose">
@@ -13,7 +14,9 @@ import Base from '../layouts/Base.astro';
       <li><strong>Plain notes.</strong> Who it's for, and the trade-offs.</li>
     </ul>
     <h2>How ModY will pay for itself</h2>
-    <p>Down the road, ModY may use clearly labeled featured listings, affiliate links, or sponsors. Paid placement will always be marked, and it will never change the notes or the fitment info.</p>
+    {hasAmazonTag
+      ? <p>ModY uses affiliate links on some Amazon listings. Those links are labeled “Affiliate”. As an Amazon Associate, ModY earns from qualifying purchases, at no extra cost to you. Down the road we may also add clearly labeled featured listings or sponsors. Paid placement will always be marked, and it will never change the notes or the fitment info.</p>
+      : <p>ModY may use affiliate links, clearly labeled featured listings, or sponsors. Any affiliate link is labeled “Affiliate” when present. Paid placement will always be marked, and it will never change the notes or the fitment info.</p>}
     <p>ModY is not affiliated with Tesla, Inc.</p>
   </div>
 </Base>
